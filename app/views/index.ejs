@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos</title>
+</head>
+<body>
+    <h1>TreinaWeb Cursos</h1>
+
+    <ul>
+        <% for(var i = 0; i < cursos.length; i++){ %>
+            <li>
+                <%= cursos[i].nome %> - <%= cursos[i].categoria %>
+                <button onclick="removeCourse('<%= cursos[i]._id %>')" >X</button>
+            </li>
+        <% } %>
+    </ul>
+
+    <form onsubmit="createCourse(event)" >
+        <input type="text" id="nome" placeholder="Nome" autofocus />
+        <input type="text" id="categoria" placeholder="Categoria"/>
+        <input type="submit" value="Criar" />
+    </form>
+
+
+</body>
+<script>
+    function createCourse(event){
+        event.preventDefault();
+        var nome = document.querySelector('#nome').value,
+            categoria = document.querySelector('#categoria').value;
+
+        fetch('/', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage['token']}`
+            },
+            body: JSON.stringify({nome, categoria})
+        })
+            .then(resp => resp.json())
+            .then(()=>{location.reload()})
+            .catch(()=>{
+                console.error('ocorreu um erro!');
+            })
+    }
+
+    function removeCourse(id){
+        fetch(`/remove/${id}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${localStorage['token']}`
+            }
+        })
+            .then(resp => resp.json())
+            .then(()=>{location.reload()})
+            .catch(()=>{
+                console.error('ocorreu um erro!');
+            })
+    }
+
+    function login(){
+        fetch('/login', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({name: 'joao', password: 'joao123'})
+        })
+            .then(resp => resp.json())
+            .then(resp => {
+                if(resp.token){
+                    localStorage['token'] = resp.token;
+                }
+            })
+
+    }
+</script>
+</html>

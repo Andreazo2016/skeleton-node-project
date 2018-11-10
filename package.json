@@ -1,0 +1,23 @@
+{
+  "name": "app_cursos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "express-load": "^1.1.15",
+    "express-namespace": "^0.1.1",
+    "jsonwebtoken": "^7.3.0",
+    "mongoose": "^4.9.3",
+    "passport-jwt": "^2.2.1",
+    "passport": "^0.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
